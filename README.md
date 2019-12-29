@@ -9,8 +9,9 @@
 
 ### Dev Server
 
-* Run `ng serve` for a dev server
-    * `--open` opens browser
+* Run `sudo ng serve` for a dev server
+    * `sudo` for permission to page refresh on file change 
+    
 
 ### Code scaffolding
 
