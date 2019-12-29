@@ -14,6 +14,9 @@ import { Component, OnInit } from '@angular/core';
   /* relative location of the component's private CSS styles */
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Theater';
+
+  ngOnInit(): void {
+  }
 }

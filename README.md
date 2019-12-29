@@ -3,9 +3,14 @@
 >Single page application powered by Angular consuming Theater_API
 
 ### Set-up
+* Angular CLI: 8.3.21
+* Angular 8.2.14.0
+* Node 12.14.0
+* OS: Linux x64
 * Angular CLI
     * `npm install -g @angular/cli`
-
+* Angular Material
+    * `npm install --save @angular/material @angular/cdk @angular/animations`
 
 ### Dev Server
 

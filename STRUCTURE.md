@@ -1,4 +1,4 @@
-## Project Structure
+## Angular Project Structure
 
 * credit to Angular.io
 
