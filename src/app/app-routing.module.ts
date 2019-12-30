@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {ShowTimesComponent} from './show-times/show-times.component';
+import {NowPlayingComponent} from './now-playing/now-playing.component';
 
 /* best practice to load and configure the router in separate, top level
  module that is dedicated to routing and imported from the root AppModule.
@@ -14,8 +14,8 @@ import {ShowTimesComponent} from './show-times/show-times.component';
 const routes: Routes = [
   /* parameterized route example { path: 'detail/:id', component: SomeComponent} */
   /* this path redirects a URL that fully matches the empty path */
-  { path: '', redirectTo: '/show-times', pathMatch: 'full'},
-  { path: 'show-times', component: ShowTimesComponent },
+  { path: '', redirectTo: '/now-playing', pathMatch: 'full'},
+  { path: 'now-playing', component: NowPlayingComponent },
 ];
 
 /* metadata initializes router and starts it listening for browser location changes */

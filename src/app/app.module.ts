@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
+import {HttpClientModule} from '@angular/common/http';
 
 /* Angular Material */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -8,8 +9,10 @@ import { AngularMaterialModule } from './angular-material.module';
 
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { ShowTimesComponent } from './show-times/show-times.component';
+import { NowPlayingComponent } from './now-playing/now-playing.component';
 import { DatePickerComponent } from './date-picker/date-picker.component';
+import {TheaterApiService} from './theater-api.service';
+
 
 
 /* defines the root module, named AppModule, that tells Angular
@@ -23,20 +26,21 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
   declarations: [
     AppComponent,
     NavBarComponent,
-    ShowTimesComponent,
+    NowPlayingComponent,
     DatePickerComponent,
   ],
   /* external modules for app */
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
 
     /* Angular Material */
     BrowserAnimationsModule,
     AngularMaterialModule,
 
   ],
-  providers: [],
+  providers: [TheaterApiService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
