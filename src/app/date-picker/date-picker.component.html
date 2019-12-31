@@ -1,9 +1,14 @@
-<input matInput [matDatepicker]="picker" placeholder="Choose a date"
-       (dateInput)="changeDate($event)"
-       (dateChange)="changeDate($event)">
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-<mat-datepicker #picker></mat-datepicker>
+<mat-form-field>
 
-<!-- this wrapper gives different look
-     <mat-form-field></mat-form-field>
--->
+  <input matInput [matDatepicker]="picker"
+         placeholder="Choose a date"
+         [min]="minDate"
+         (dateInput)="changeDate($event)"
+         (dateChange)="changeDate($event)">
+
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+
+  <!-- #picker is reference to actual datepicker in this template -->
+  <mat-datepicker #picker [startAt]="minDate"></mat-datepicker>
+
+</mat-form-field>

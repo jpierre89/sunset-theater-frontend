@@ -1,27 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import {TheaterApiService} from '../theater-api.service';
-import {Show} from '../show';
+
+import {Show} from '../models/show';
+import {ConversionService} from '../conversion.service';
+import {MovieOnDate} from '../models/movie-on-date';
 
 @Component({
   selector: 'app-now-playing',
   templateUrl: './now-playing.html',
   styleUrls: ['./now-playing.css']
 })
-/** displays all show times for a specified date, organized by Movie Title.
- *  will default to current date
- */
+/** displays all show times for a specified date, organized by Movie Title. Default current date */
 export class NowPlayingComponent implements OnInit {
-  /* user selected date */
+  /* holds LOCALTIME */
   selectedDate: Date;
-
-  /* list of shows on a single selected date */
+  /* shows returned from api for a selected date */
   shows: Show[];
+  /* movies returned from api for a selected date */
+  movies: MovieOnDate[];
 
   constructor(
-    /* inject the shared instance of theaterApiService (singleton).
-       the parameter both defines a private theaterApiService property and identifies
+    /* inject shared instance service (singleton). the parameter both defines a property and identifies
        it as a theaterApiService injection site. */
-    private theaterApiService: TheaterApiService
+    private theaterApiService: TheaterApiService,
+    private conversionService: ConversionService
   ) { }
 
   ngOnInit(
@@ -29,7 +31,7 @@ export class NowPlayingComponent implements OnInit {
   ) {
   }
 
-  updateMovieTimes($event) {
+  updateMovieTimes($event): void {
     /* if the selected date is unchanged, do not update movie times.
        Note: Seems as though two events are emitted on single calendar change, so this
        also protects against double update on a single user date selection */
@@ -41,14 +43,11 @@ export class NowPlayingComponent implements OnInit {
 
     this.selectedDate = $event;
 
-    /* service uses asynchronous call to server, component wont wait for the response the
-       subscribe method() passes the emitted array to the callback, which sets this.shows */
+    this.theaterApiService.getMoviesByDate(this.selectedDate)
+      .subscribe(res => this.movies = res);
+
     this.theaterApiService.getShowsByDate(this.selectedDate)
-      .subscribe(shows => this.shows = shows);
-
-    alert(this.selectedDate); // Test: verification of Date received
-
-    // TODO
+      .subscribe(res => this.shows = res);
   }
 
 }

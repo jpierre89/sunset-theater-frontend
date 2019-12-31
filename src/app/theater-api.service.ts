@@ -1,23 +1,30 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import {Movie} from './movie';
+import {Movie} from './models/movie';
+import {Show} from './models/show';
+import {Params} from '@angular/router';
+import {MovieOnDate} from './models/movie-on-date';
 
 /* When you provide the service at the root level, angular creates a single, shared instance of
    this service and injects it into any class that asks for it. Registering the provider in the
-   @Injectable metadata also allows angular to optimize an app by removing service if its not used */
+   @Injectable metadata also allows angular to optimize an app by removing service if its not used
+   HttpClient.get() returns the body of the response as an untyped JSON object by default.
+   Applying optional type specifier, <ClassName[]>, gives typed result object (Angular.io) */
 
 @Injectable({
   providedIn: 'root'
 })
 export class TheaterApiService {
-  private baseUrl = '127.0.0.1:4201';
+  private baseUrl = 'http://127.0.0.1:5000';
   private movieUrl = `${ this.baseUrl }/movie`;
   private showsByDateUrl = `${ this.baseUrl }/shows/date`;
+  private moviesByDateUrl = `${ this.baseUrl }/movies/date`;
+  private allMoviesUrl = `${ this.baseUrl }/movies/all`;
 
-  /* api expects special header TODO get exluded? */
+  /* api expects special header, GET req doesnt seem to require */
   httpOptions = {
    headers: new HttpHeaders({ 'Content-Type': 'application/json'})
   };
@@ -25,6 +32,30 @@ export class TheaterApiService {
   constructor(
     private http: HttpClient,
   ) { }
+
+  /* format date to accepted API format. Does not convert date to UTC as user would
+     expect date selected to not change */
+  private constructDateParam(date: Date): HttpParams {
+
+    // api requires range 1-12, datepicker month range is 0-11,
+    let month: string = (date.getMonth() + 1).toString();
+    let day: string = (date.getDate().toString());
+
+    // api requires 2 digit month; datepicker omits 0 prefix
+    if (month.length === 1) {
+      month = '0' + month;
+    }
+
+    // api requires 2 digit date; datepicker omits 0 prefix
+    if (day.length === 1) {
+      day = '0' + day;
+    }
+
+    const dateParam = date.getFullYear() + '-' + month + '-' + day;
+    let param = new HttpParams();
+    param = param.append('date', dateParam);
+    return param;
+  }
 
   /**
    * Handle Http operation that failed.
@@ -38,42 +69,58 @@ export class TheaterApiService {
          so it can return the safe value as the type that the app expects */
 
       console.error(error);
-      // alert('request failed'); // Test: verification
+      alert('request failed'); // Test: verification
 
       /* Let the app keep running by returning an empty result */
       return of(result as T);
     };
   }
-  /** GET movie times for a specified Date
+
+  /** GET show times for a specified Date
    *  @param date - Date for request
    */
-  getShowsByDate(date: Date): Observable<any> {
-    /* HttpClient.get() returns the body of the response as an untyped JSON object by default.
-       Applying the optional type specifier, ex. <ClassName[]>, gives you a typed result object.
-       to catch error, you pipe the observable value received through RxJS catchError() operator.
-       this operator intercepts an Observable that FAILED. it passes the error an error handler
-       that can do what it wants with the error.
-       The RxJS tap() operator looks at observable values, does something with them, and passes
-       them along untouched. */
+  getShowsByDate(date: Date): Observable<Show[]> {
+      const params = this.constructDateParam(date);
 
-    /* construct request url with date */
-    const url = `${ this.showsByDateUrl }/${date}`;
+      return this.http.get<Show[]>(this.showsByDateUrl, {params}).pipe(
+          catchError(this.handleError<Show[]>('getShowsByDate'))
+        );
+  }
 
-    return this.http.get<any>(url).pipe(
-        catchError(this.handleError<any>('getShowsByDate'))
+  /** GET movies for a specified Date
+   *  @param date - Date for request
+   */
+  getMoviesByDate(date: Date): Observable<MovieOnDate[]> {
+      const params = this.constructDateParam(date);
+
+      return this.http.get<MovieOnDate[]>(this.moviesByDateUrl, {params}).pipe(
+          catchError(this.handleError<MovieOnDate[]>('getMoviesOnDate'))
+        );
+  }
+
+  /** GET all movies */
+  getAllMovies(): Observable<any> {
+    const url = `${ this.allMoviesUrl }`;
+
+    return this.http.get(url, this.httpOptions).pipe(
+        catchError(this.handleError<any>('getAllMovies'))
       );
   }
 
   /** GET Movie
    * @param id - id number of movie
    */
-  getMovie(id: number): Observable<Movie> {
+  getMovie(id: number): Observable<any> {
     /* construct request url with id */
-    const url = `${ this.movieUrl }/${id}`;
+    const url = `${ this.movieUrl }`;
+
+    let params = new HttpParams();
+    params = params.append('movie_id', String(id));
 
     /* expects single movie response from server */
-    return this.http.get<Movie>(url).pipe(
+    return this.http.get(url, {params}).pipe(
       catchError(this.handleError<Movie>(`getMovie id=${ id }`))
+
     );
   }
 }

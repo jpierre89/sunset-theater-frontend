@@ -1,7 +1,6 @@
 /* import all Angular Material modules here (many not used) */
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import {
    MatButtonModule,
@@ -24,49 +23,32 @@ import {
    MatCardModule
 } from '@angular/material';
 
+const material = [
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatBadgeModule,
+    MatListModule,
+    MatGridListModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatChipsModule,
+    MatTooltipModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatCardModule
+];
+
 @NgModule({
-   imports: [
-      CommonModule,
-      MatButtonModule,
-      MatToolbarModule,
-      MatIconModule,
-      MatSidenavModule,
-      MatBadgeModule,
-      MatListModule,
-      MatGridListModule,
-      MatFormFieldModule,
-      MatInputModule,
-      MatSelectModule,
-      MatRadioModule,
-      MatDatepickerModule,
-      MatNativeDateModule,
-      MatChipsModule,
-      MatTooltipModule,
-      MatTableModule,
-      MatPaginatorModule,
-      MatCardModule
-   ],
-   exports: [
-      MatButtonModule,
-      MatToolbarModule,
-      MatIconModule,
-      MatSidenavModule,
-      MatBadgeModule,
-      MatListModule,
-      MatGridListModule,
-      MatInputModule,
-      MatFormFieldModule,
-      MatSelectModule,
-      MatRadioModule,
-      MatDatepickerModule,
-      MatChipsModule,
-      MatTooltipModule,
-      MatTableModule,
-      MatPaginatorModule,
-      MatCardModule
-   ],
+   imports: [ material ],
+   exports: [ material ],
    providers: [
-      MatDatepickerModule,
+      MatDatepickerModule, MatNativeDateModule
    ]
 })
 

@@ -4,3 +4,21 @@
      updateMovieTimes($event) is called -->
 <app-date-picker (dateEmitter)="updateMovieTimes($event)"></app-date-picker>
 
+<div *ngFor="let movie of movies">
+
+  <h4>{{ movie.title }}</h4>
+  <ul>
+    <div *ngFor="let show of shows">
+
+      <div *ngIf="show.movie.id == movie.id">
+        <button id="{{ show.id }}">
+          {{ show.time }}
+        </button>
+
+      </div>
+     </div>
+  </ul>
+
+</div>
+
+
