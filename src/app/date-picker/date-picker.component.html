@@ -1,13 +1,12 @@
-<mat-form-field>
-
-  <input matInput [matDatepicker]="picker"
-         placeholder="Choose a date"
-         [min]="minDate"
-         (dateInput)="changeDate($event)">
-
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-
-  <!-- #picker is reference to actual datepicker in this template -->
-  <mat-datepicker #picker [startAt]="minDate"></mat-datepicker>
-
-</mat-form-field>
+<div class="row">
+  <div class="col-xs-12 col-12 col-md-4 form-group">
+    <input type="text"
+           placeholder="Choose a date"
+           class="form-control"
+           placement="bottom"
+           [minDate] = "minDate"
+           [bsConfig]="dpConfig"
+           (bsValueChange)="changeDate($event)"
+           bsDatepicker>
+  </div>
+</div>

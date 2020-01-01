@@ -24,10 +24,7 @@ export class NowPlayingComponent implements OnInit {
     private theaterApiService: TheaterApiService,
   ) { }
 
-  ngOnInit(
-    // TODO this.selectedDate = default date, updateMovieTimes(this.selectedDate)
-  ) {
-  }
+  ngOnInit() {}
 
   displayMovieTimes($event): void {
     this.selectedDate = $event;

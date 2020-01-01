@@ -1,21 +1,29 @@
-<h1>Now Playing</h1>
-<!-- when dateEmitter method called on app-date-picker,
-     updateMovieTimes($event) is called -->
-<app-date-picker (dateEmitter)="displayMovieTimes($event)"></app-date-picker>
-
-<div *ngFor="let movie of movies">
-  <mat-divider></mat-divider>
-  <a>{{ movie.title }}</a>
-  <ul>
-    <div *ngFor="let show of shows">
-      <span *ngIf="show.movie.id == movie.id">
-        <button mat-stroked-button color="accent" id="{{ show.id }}"  routerLink="/seat-selection/{{ show.id }}">
-          {{ show.time | time }}
-        </button>
-      </span>
-     </div>
-  </ul>
+<div class="container-fluid">
+  <div class="row">
+    <!-- only columns are placed inside a row -->
+    <div class="col">
+      <h1 id="nowPlaying">Now Playing</h1>
+      <h5 id="selectedDate">{{selectedDate.toDateString()}}</h5>
+    </div>
+  </div>
+  <!-- when dateEmitter method called on app-date-picker, updateMovieTimes($event) is called -->
+  <app-date-picker (dateEmitter)="displayMovieTimes($event)"></app-date-picker>
+  <div class="movieShowTimes" *ngFor="let movie of movies">
+    <a class="movieTitle"><h4>{{ movie.title }}</h4></a>
+    <div class="row">
+      <div *ngFor="let show of shows">
+        <span class="col" *ngIf="show.movie.id == movie.id">
+          <button type="button" class="btn btn-outline-primary showbtn" routerLink="/seat-selection/{{ show.id }}">
+            {{ show.time | time }}
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
 </div>
+
+
+
 
 
 

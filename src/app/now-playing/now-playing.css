@@ -1,4 +1,39 @@
+#selectedDate {
+}
 
+#nowPlaying {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
 
+.movieShowTimes {
+  padding-top: 40px;
+}
 
+.movieTitle {
+  /* text-decoration: none; no underline */
+  color: black;
+  background: none;
+  outline: 0;
+}
 
+a:hover {
+  color: orange;
+}
+
+#main {
+  background-color: aquamarine;
+}
+
+.showbtn {
+  min-width: 95px;
+  margin-top: 10px;
+}
+
+.test {
+  background-color: gold;
+}
+
+.test2 {
+  background-color: green;
+}

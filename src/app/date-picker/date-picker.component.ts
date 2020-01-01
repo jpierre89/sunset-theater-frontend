@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material';
+import {BsDatepickerConfig} from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-date-picker',
@@ -13,22 +14,33 @@ import {MatNativeDateModule} from '@angular/material';
  * Note: date picker month starts at 0
  */
 export class DatePickerComponent implements OnInit {
-  /* current date, is the minimum date displayed by datepicker */
-  minDate = new Date();
-  selectedDate: Date = this.minDate;
+  /* datepicker config */
+  public dpConfig: Partial<BsDatepickerConfig> = new BsDatepickerConfig();
+  /* minimum date selection by user is set to current date */
+  minDate: Date;
+  /* date of datepicker. Defaults to minDate */
+  selectedDate: Date;
+  /* date change event transmitter for parent component */
   @Output() dateEmitter = new EventEmitter<Date>();
 
-  /* called when user selects or enters a date*/
-  private changeDate(event: MatDatepickerInputEvent<any>) {
-    // TODO error check event value?
-    this.selectedDate = event.value; // verification test
-    this.dateEmitter.emit(event.value);
 
+  /* fires when user selects or enters a date on datepicker */
+  private changeDate(event: Date) {
+    this.selectedDate = event;
+    this.dateEmitter.emit(this.selectedDate);
   }
 
-constructor() { }
+constructor() {
+  this.minDate = new Date();
+  this.selectedDate = this.minDate;
+}
 
 ngOnInit() {
-  }
+    this.dpConfig.containerClass = 'theme-orange';
+    this.dpConfig.dateInputFormat = 'MM/DD/YYYY';
+    this.dpConfig.isAnimated = true;
+    this.dpConfig.showWeekNumbers = false;
 
+    this.changeDate(this.selectedDate);
+  }
 }

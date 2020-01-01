@@ -1,12 +1,6 @@
 /* Application-wide Styles */
+@import '~bootstrap/dist/css/bootstrap.min.css';
 
-/* Angular Material requirement; if a theme not imported, components do not work correctly  */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-/* @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";*/
-
-/* Added by Angular Material
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
 
 html, body {
   height: 100%;
@@ -15,6 +9,7 @@ html, body {
 body {
   margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
 
 h1 {
   font-size: 250%;

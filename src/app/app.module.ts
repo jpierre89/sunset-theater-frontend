@@ -2,10 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
-
-/* Angular Material */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AngularMaterialModule } from './angular-material.module';
 
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -17,6 +14,10 @@ import {TheaterApiService} from './theater-api.service';
 import { TimePipe } from './time.pipe';
 import { SeatSelectionComponent } from './seat-selection/seat-selection.component';
 import { CartComponent } from './cart/cart.component';
+
+/* ngx-boostrap */
+import {BsDatepickerModule} from 'ngx-bootstrap';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 /* defines the root module, named AppModule, that tells Angular
    how to assemble the application. Initially declares only the
@@ -40,10 +41,11 @@ import { CartComponent } from './cart/cart.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    BrowserAnimationsModule, // TODO needed?
 
-    /* Angular Material */
-    BrowserAnimationsModule,
-    AngularMaterialModule,
+    /* ngx-bootstrap  */
+    BsDatepickerModule.forRoot(),
+    ButtonsModule.forRoot(),
 
   ],
   providers: [TheaterApiService],
