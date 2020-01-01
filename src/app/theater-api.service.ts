@@ -20,6 +20,7 @@ import {MovieOnDate} from './models/movie-on-date';
 export class TheaterApiService {
   private baseUrl = 'http://127.0.0.1:5000';
   private movieUrl = `${ this.baseUrl }/movie`;
+  private showUrl = `${ this.baseUrl }/show`;
   private showsByDateUrl = `${ this.baseUrl }/shows/date`;
   private moviesByDateUrl = `${ this.baseUrl }/movies/date`;
   private allMoviesUrl = `${ this.baseUrl }/movies/all`;
@@ -69,12 +70,29 @@ export class TheaterApiService {
          so it can return the safe value as the type that the app expects */
 
       console.error(error);
-      alert('request failed'); // Test: verification
+      // alert('request failed'); // Test: verification
 
       /* Let the app keep running by returning an empty result */
       return of(result as T);
     };
   }
+
+
+  /** GET Show
+   * @param id - id number of show
+   */
+  getShow(id: number): Observable<Show> {
+    /* construct request url with id */
+    const url = `${this.showUrl}`;
+
+    let params = new HttpParams();
+    params = params.append('show_id', String(id));
+
+    /* expects single show response from server */
+    return this.http.get<Show>(url, {params})
+      .pipe(catchError(this.handleError<Show>(`getShow id=${id}`)));
+  }
+
 
   /** GET show times for a specified Date
    *  @param date - Date for request
@@ -82,9 +100,8 @@ export class TheaterApiService {
   getShowsByDate(date: Date): Observable<Show[]> {
       const params = this.constructDateParam(date);
 
-      return this.http.get<Show[]>(this.showsByDateUrl, {params}).pipe(
-          catchError(this.handleError<Show[]>('getShowsByDate'))
-        );
+      return this.http.get<Show[]>(this.showsByDateUrl, {params})
+        .pipe(catchError(this.handleError<Show[]>('getShowsByDate')));
   }
 
   /** GET movies for a specified Date
@@ -93,18 +110,16 @@ export class TheaterApiService {
   getMoviesByDate(date: Date): Observable<MovieOnDate[]> {
       const params = this.constructDateParam(date);
 
-      return this.http.get<MovieOnDate[]>(this.moviesByDateUrl, {params}).pipe(
-          catchError(this.handleError<MovieOnDate[]>('getMoviesOnDate'))
-        );
+      return this.http.get<MovieOnDate[]>(this.moviesByDateUrl, {params})
+        .pipe(catchError(this.handleError<MovieOnDate[]>('getMoviesOnDate')));
   }
 
   /** GET all movies */
   getAllMovies(): Observable<any> {
     const url = `${ this.allMoviesUrl }`;
 
-    return this.http.get(url, this.httpOptions).pipe(
-        catchError(this.handleError<any>('getAllMovies'))
-      );
+    return this.http.get(url, this.httpOptions)
+      .pipe(catchError(this.handleError<any>('getAllMovies')));
   }
 
   /** GET Movie
@@ -118,8 +133,8 @@ export class TheaterApiService {
     params = params.append('movie_id', String(id));
 
     /* expects single movie response from server */
-    return this.http.get(url, {params}).pipe(
-      catchError(this.handleError<Movie>(`getMovie id=${ id }`))
+    return this.http.get(url, {params})
+      .pipe(catchError(this.handleError<Movie>(`getMovie id=${ id }`))
 
     );
   }

@@ -1,24 +1,22 @@
 <h1>Now Playing</h1>
-
 <!-- when dateEmitter method called on app-date-picker,
      updateMovieTimes($event) is called -->
-<app-date-picker (dateEmitter)="updateMovieTimes($event)"></app-date-picker>
+<app-date-picker (dateEmitter)="displayMovieTimes($event)"></app-date-picker>
 
 <div *ngFor="let movie of movies">
-
-  <h4>{{ movie.title }}</h4>
+  <mat-divider></mat-divider>
+  <a>{{ movie.title }}</a>
   <ul>
     <div *ngFor="let show of shows">
-
-      <div *ngIf="show.movie.id == movie.id">
-        <button id="{{ show.id }}">
-          {{ show.time }}
+      <span *ngIf="show.movie.id == movie.id">
+        <button mat-stroked-button color="accent" id="{{ show.id }}"  routerLink="/seat-selection/{{ show.id }}">
+          {{ show.time | time }}
         </button>
-
-      </div>
+      </span>
      </div>
   </ul>
-
 </div>
+
+
 
 

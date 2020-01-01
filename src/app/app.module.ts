@@ -14,7 +14,9 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
 
 /* services */
 import {TheaterApiService} from './theater-api.service';
-import {ConversionService} from './conversion.service';
+import { TimePipe } from './time.pipe';
+import { SeatSelectionComponent } from './seat-selection/seat-selection.component';
+import { CartComponent } from './cart/cart.component';
 
 /* defines the root module, named AppModule, that tells Angular
    how to assemble the application. Initially declares only the
@@ -29,6 +31,9 @@ import {ConversionService} from './conversion.service';
     NavBarComponent,
     NowPlayingComponent,
     DatePickerComponent,
+    TimePipe,
+    SeatSelectionComponent,
+    CartComponent,
   ],
   /* external modules for app */
   imports: [
@@ -41,7 +46,7 @@ import {ConversionService} from './conversion.service';
     AngularMaterialModule,
 
   ],
-  providers: [TheaterApiService, ConversionService],
+  providers: [TheaterApiService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
