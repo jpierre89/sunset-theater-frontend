@@ -9,6 +9,10 @@ export class MovieOnDate {
   description: string;
   genre: Genre;
   director: Director;
-  cast: Actor[];
+  actors: Actor[];
   rating: string;
+
+  /* this property is not from api - rather for collapsable content */
+  collapsed = true;
+
 }

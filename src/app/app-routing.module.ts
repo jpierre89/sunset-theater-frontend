@@ -15,7 +15,7 @@ import {CartComponent} from './cart/cart.component';
     component: the component that the router should create when navigating to this route  */
 const routes: Routes = [
   /* this path redirects a URL that fully matches the empty path */
-  { path: '', redirectTo: '/now-playing', pathMatch: 'full'},
+  { path: '', redirectTo: 'now-playing', pathMatch: 'full'},
   { path: 'now-playing', component: NowPlayingComponent },
   /* this is parameterized route */
   { path: 'seat-selection/:show-id', component: SeatSelectionComponent },

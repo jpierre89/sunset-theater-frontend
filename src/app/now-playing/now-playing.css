@@ -1,9 +1,20 @@
 #selectedDate {
+  padding-left: 25px;
+}
+
+#titleHeader {
+  display: block;
+  margin-block: 15px;
+  margin-bottom: 15px;
 }
 
 #nowPlaying {
-  padding-top: 15px;
-  padding-bottom: 15px;
+  display: inline-block;;
+
+}
+
+#selectedDate {
+  display: inline-block;
 }
 
 .movieShowTimes {
@@ -19,6 +30,8 @@
 
 a:hover {
   color: orange;
+  /* for movie info anchor which has no reference but used for collapsable */
+  cursor: pointer;
 }
 
 #main {

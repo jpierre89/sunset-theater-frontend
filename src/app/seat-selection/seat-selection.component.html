@@ -1,1 +1,15 @@
-<p>seat-selection works!</p>
+<h1>Seat Selection</h1>
+
+<div *ngFor="let row of rows" style="display: block">
+  <span *ngFor="let seat of row.seats" style="display: inline-block">
+    <div (click)="addSeat(seat.id)" class="square rounded">
+      <p>{{ seat.number }}</p>
+    </div>
+  </span>
+</div>
+
+<button routerLink="/cart">Reserve Seats</button>
+
+
+
+

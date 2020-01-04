@@ -18,6 +18,7 @@ import { CartComponent } from './cart/cart.component';
 /* ngx-boostrap */
 import {BsDatepickerModule} from 'ngx-bootstrap';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 /* defines the root module, named AppModule, that tells Angular
    how to assemble the application. Initially declares only the
@@ -41,11 +42,12 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule, // TODO needed?
+    BrowserAnimationsModule,
 
     /* ngx-bootstrap  */
     BsDatepickerModule.forRoot(),
     ButtonsModule.forRoot(),
+    CollapseModule.forRoot(),
 
   ],
   providers: [TheaterApiService],

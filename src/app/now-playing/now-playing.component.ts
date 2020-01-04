@@ -17,6 +17,8 @@ export class NowPlayingComponent implements OnInit {
   shows: Show[];
   /* movies returned from api for a selected date */
   movies: MovieOnDate[];
+  /* by default movie info hidden */
+  movieInfoCollapsed = true;
 
   constructor(
     /* inject shared instance service (singleton). the parameter both defines a property and identifies
@@ -35,7 +37,5 @@ export class NowPlayingComponent implements OnInit {
     this.theaterApiService.getShowsByDate(this.selectedDate)
       .subscribe(res => this.shows = res);
   }
-
-  routeToSeats(showID: number) {}
 
 }

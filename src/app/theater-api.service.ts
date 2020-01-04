@@ -7,6 +7,8 @@ import {Movie} from './models/movie';
 import {Show} from './models/show';
 import {Params} from '@angular/router';
 import {MovieOnDate} from './models/movie-on-date';
+import {Seat} from './models/seat';
+import {Reservation} from './models/reservation';
 
 /* When you provide the service at the root level, angular creates a single, shared instance of
    this service and injects it into any class that asks for it. Registering the provider in the
@@ -21,9 +23,11 @@ export class TheaterApiService {
   private baseUrl = 'http://127.0.0.1:5000';
   private movieUrl = `${ this.baseUrl }/movie`;
   private showUrl = `${ this.baseUrl }/show`;
+  private showSeatingUrl = `${ this.baseUrl }/show/seating`;
   private showsByDateUrl = `${ this.baseUrl }/shows/date`;
   private moviesByDateUrl = `${ this.baseUrl }/movies/date`;
   private allMoviesUrl = `${ this.baseUrl }/movies/all`;
+  private reservationUrl = `${ this.baseUrl }/reservation`;
 
   /* api expects special header, GET req doesnt seem to require */
   httpOptions = {
@@ -126,7 +130,6 @@ export class TheaterApiService {
    * @param id - id number of movie
    */
   getMovie(id: number): Observable<any> {
-    /* construct request url with id */
     const url = `${ this.movieUrl }`;
 
     let params = new HttpParams();
@@ -134,8 +137,37 @@ export class TheaterApiService {
 
     /* expects single movie response from server */
     return this.http.get(url, {params})
-      .pipe(catchError(this.handleError<Movie>(`getMovie id=${ id }`))
-
-    );
+      .pipe(catchError(this.handleError<Movie>(`getMovie id=${ id }`)));
   }
+
+  /** GET Show Seating
+   * @param id - id number of show
+   */
+  getShowSeating(id: number): Observable<Seat[]> {
+    const url = `${ this.showSeatingUrl }`;
+
+    let params = new HttpParams();
+    params = params.append('show_id', String(id));
+
+    return this.http.get<Seat[]>(url, {params})
+      .pipe(catchError(this.handleError<Seat[]>(`getShowSeating id=${ id }`)));
+  }
+
+    /** POST reservation
+   * @param showID = id of selected show
+     @param seatIDs - list of ids for selected seats
+   */
+  reserveSeats(showID: number, seatIDs: number[]): Observable<Reservation[]> {
+    const url = `${ this.reservationUrl }`;
+
+    let params = new HttpParams();
+    params = params.append('show_id', String(showID));
+    for (let id of seatIDs) {
+      params = params.append('seatID', String(id));
+    }
+
+    return this.http.get<Reservation[]>(url, {params})
+      .pipe(catchError(this.handleError<Reservation[]>(`reserveSeat, show id=${ showID }, seat ids=${ seatIDs.toString() }`)));
+  }
+
 }
