@@ -26,4 +26,8 @@ export class CartComponent implements OnInit {
       .subscribe(res => this.reservations = res);
   }
 
+  removeReservation(reservationID: number) {
+    this.theaterApiService.removeReservation(reservationID)
+      .subscribe(res => this.getReservations())
+  }
 }

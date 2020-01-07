@@ -212,4 +212,16 @@ export class TheaterApiService {
       .pipe(catchError(this.handleError(`reserveSeat, show id=${ showID }, seat ids=${ seatIDs.toString() }`)));
   }
 
+  /** DELETE reservation
+   * @param res_id - id of reservation to delete
+   */
+    removeReservation(reservationId: number): Observable<any> {
+      const url = `${ this.reservationUrl }`;
+      let params = new HttpParams();
+      params = params.append('reservation_id', String(reservationId));
+
+      return this.http.delete(url, {params})
+        .pipe(catchError(this.handleError(`removeReservation, reservation id=${ reservationId }`)));
+  }
+
 }

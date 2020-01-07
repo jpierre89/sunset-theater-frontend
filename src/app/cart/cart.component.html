@@ -5,6 +5,7 @@
     <h5> {{ res.show.movie.title }}</h5>
     <h5>{{ res.show.date }} at {{ res.show.time | time }}</h5>
     <h5>{{ res.auditorium.name }}, seat {{ res.seat.number }}</h5>
+    <button (click)="removeReservation(res.id)">Remove</button>
   </div>
 </div>
 
