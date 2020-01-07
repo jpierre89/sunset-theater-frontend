@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {TheaterApiService} from '../theater-api.service';
-import {Reservation} from '../models/reservation';
+import {ReservationDetailModel} from '../models/reservation-Detail.model';
+import {ShowModel} from '../models/show.model';
 
 @Component({
   selector: 'app-cart',
@@ -8,21 +9,21 @@ import {Reservation} from '../models/reservation';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  reservation;
+  /* all reservations by the user.
+  *  initialized for template if/else statement */
+  reservations: ReservationDetailModel[] = new Array<ReservationDetailModel>();
 
   constructor(
     private theaterApiService: TheaterApiService
-  ) {
-
-  }
+  ) {}
 
   ngOnInit() {
-    this.getReservations()
+    this.getReservations();
   }
 
-  // TODO request all reservations from api for current user and display
   getReservations() {
-
+    this.theaterApiService.getReservations()
+      .subscribe(res => this.reservations = res);
   }
 
 }

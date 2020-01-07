@@ -1,14 +1,34 @@
 <h1>Seat Selection</h1>
 
 <div *ngFor="let row of rows" style="display: block">
-  <span *ngFor="let seat of row.seats" style="display: inline-block">
-    <div (click)="addSeat(seat.id)" class="square rounded">
+  <span *ngFor="let seat of row.seats"
+        style="display: inline-block">
+    <div class="square rounded"
+         [class.selected]="isSelected(seat)"
+         [class.unavailable]="seat.isReserved"
+         [class.empty]="seat.is_empty_space"
+         (click)="addSeat(seat)">
       <p>{{ seat.number }}</p>
     </div>
   </span>
 </div>
 
-<button routerLink="/cart">Reserve Seats</button>
+
+
+<div id="options">
+  <div id="selected">
+    <span *ngIf="this.selectedSeats">Seats Selected: </span>
+    <span *ngFor="let seat of selectedSeats">
+      {{ seat.number }}
+    </span>
+  </div>
+  <span id="refresh">
+    <button (click)="clearSeats()">Refresh</button>
+  </span>
+  <span id="reserve">
+    <button (click)="reserveSeats()">Reserve Seats</button>
+  </span>
+</div>
 
 
 

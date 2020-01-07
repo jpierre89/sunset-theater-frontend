@@ -3,12 +3,13 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import {Movie} from './models/movie';
-import {Show} from './models/show';
+import {MovieModel} from './models/movie.model';
+import {ShowModel} from './models/show.model';
 import {Params} from '@angular/router';
 import {MovieOnDate} from './models/movie-on-date';
-import {Seat} from './models/seat';
-import {Reservation} from './models/reservation';
+import {SeatModel} from './models/seat.model';
+import {ReservationDetailModel} from './models/reservation-Detail.model';
+import {AuditoriumModel} from './models/auditorium.model';
 
 /* When you provide the service at the root level, angular creates a single, shared instance of
    this service and injects it into any class that asks for it. Registering the provider in the
@@ -23,11 +24,14 @@ export class TheaterApiService {
   private baseUrl = 'http://127.0.0.1:5000';
   private movieUrl = `${ this.baseUrl }/movie`;
   private showUrl = `${ this.baseUrl }/show`;
+  private auditoriumUrl = `${ this.baseUrl }/auditorium`;
   private showSeatingUrl = `${ this.baseUrl }/show/seating`;
+  private seatAvailabilityUrl = `${ this.baseUrl }/seat/reserved`;
   private showsByDateUrl = `${ this.baseUrl }/shows/date`;
   private moviesByDateUrl = `${ this.baseUrl }/movies/date`;
   private allMoviesUrl = `${ this.baseUrl }/movies/all`;
-  private reservationUrl = `${ this.baseUrl }/reservation`;
+  private reservationUrl = `${ this.baseUrl }/reservations`;
+  private showsByUserUrl = `${ this.baseUrl }/reservations/user/shows`;
 
   /* api expects special header, GET req doesnt seem to require */
   httpOptions = {
@@ -72,40 +76,113 @@ export class TheaterApiService {
     return (error: any): Observable<T> => {
       /* it takes a type parameter of the type the get request was supposed to receive
          so it can return the safe value as the type that the app expects */
-
       console.error(error);
       // alert('request failed'); // Test: verification
-
       /* Let the app keep running by returning an empty result */
       return of(result as T);
     };
   }
 
+  /**
+   * GET auditoriumModel
+   * @param id - id of auditorium
+   */
+  getAuditorium(id: number): Observable<AuditoriumModel> {
+    const url = `${this.auditoriumUrl}`;
+    let params = new HttpParams();
+    params = params.append('auditorium_id', String(id));
 
-  /** GET Show
+    return this.http.get<AuditoriumModel>(url, {params})
+      .pipe(catchError(this.handleError<AuditoriumModel>(`getAuditorium id=${id}`)));
+  }
+
+  /** GET ShowModel
    * @param id - id number of show
    */
-  getShow(id: number): Observable<Show> {
+  getShow(id: number): Observable<ShowModel> {
     /* construct request url with id */
     const url = `${this.showUrl}`;
-
     let params = new HttpParams();
     params = params.append('show_id', String(id));
 
-    /* expects single show response from server */
-    return this.http.get<Show>(url, {params})
-      .pipe(catchError(this.handleError<Show>(`getShow id=${id}`)));
+    return this.http.get<ShowModel>(url, {params})
+      .pipe(catchError(this.handleError<ShowModel>(`getShow id=${id}`)));
   }
 
+  /** GET all movies */
+  getAllMovies(): Observable<any> {
+    const url = `${ this.allMoviesUrl }`;
 
-  /** GET show times for a specified Date
+    return this.http.get(url, this.httpOptions)
+      .pipe(catchError(this.handleError<any>('getAllMovies')));
+  }
+
+  /** GET MovieModel
+   * @param id - id number of movie
+   */
+  getMovie(id: number): Observable<any> {
+    const url = `${ this.movieUrl }`;
+    let params = new HttpParams();
+    params = params.append('movie_id', String(id));
+
+    /* expects single movie response from server */
+    return this.http.get(url, {params})
+      .pipe(catchError(this.handleError<MovieModel>(`getMovie id=${ id }`)));
+  }
+
+  /** GET SeatModel given show id
+   * @param id - id number of show
+   */
+  getShowSeating(id: number): Observable<SeatModel[]> {
+    const url = `${ this.showSeatingUrl }`;
+    let params = new HttpParams();
+    params = params.append('show_id', String(id));
+
+    return this.http.get<SeatModel[]>(url, {params})
+      .pipe(catchError(this.handleError<SeatModel[]>(`getShowSeating id=${ id }`)));
+  }
+
+  /** GET seat availability for a show
+   * @param seatId - id of seat
+   * @param showId = id of show
+   */
+  getSeatAvailability(seatId: number, showId: number): Observable<boolean> {
+    const url = `${ this.seatAvailabilityUrl }`;
+    let params = new HttpParams();
+    params = params.append('seat_id', String(seatId));
+    params = params.append('show_id', String(showId));
+
+    return this.http.get<boolean>(url, {params})
+      .pipe(catchError(this.handleError<boolean>(`getSeatAvailability seat_id=${ seatId }, show_id=${ showId }`)));
+  }
+
+  /**
+   *  GET all shows a user has reservations for
+   */
+  getShowsByUser(): Observable<ShowModel[]> {
+    const url = `${ this.showsByUserUrl }`;
+    return this.http.get<ShowModel[]>(url)
+      .pipe(catchError(this.handleError<ShowModel[]>(`Unable to get shows from server`)));
+
+  }
+
+  /**
+   * GET current user reservations
+   */
+  getReservations(): Observable<ReservationDetailModel[]> {
+    const url = `${ this.reservationUrl }`;
+    return this.http.get<ReservationDetailModel[]>(url)
+      .pipe(catchError(this.handleError<ReservationDetailModel[]>(`Unable to get reservations from server`)));
+  }
+
+    /** GET show times for a specified Date
    *  @param date - Date for request
    */
-  getShowsByDate(date: Date): Observable<Show[]> {
+  getShowsByDate(date: Date): Observable<ShowModel[]> {
       const params = this.constructDateParam(date);
 
-      return this.http.get<Show[]>(this.showsByDateUrl, {params})
-        .pipe(catchError(this.handleError<Show[]>('getShowsByDate')));
+      return this.http.get<ShowModel[]>(this.showsByDateUrl, {params})
+        .pipe(catchError(this.handleError<ShowModel[]>('getShowsByDate')));
   }
 
   /** GET movies for a specified Date
@@ -118,56 +195,21 @@ export class TheaterApiService {
         .pipe(catchError(this.handleError<MovieOnDate[]>('getMoviesOnDate')));
   }
 
-  /** GET all movies */
-  getAllMovies(): Observable<any> {
-    const url = `${ this.allMoviesUrl }`;
-
-    return this.http.get(url, this.httpOptions)
-      .pipe(catchError(this.handleError<any>('getAllMovies')));
-  }
-
-  /** GET Movie
-   * @param id - id number of movie
-   */
-  getMovie(id: number): Observable<any> {
-    const url = `${ this.movieUrl }`;
-
-    let params = new HttpParams();
-    params = params.append('movie_id', String(id));
-
-    /* expects single movie response from server */
-    return this.http.get(url, {params})
-      .pipe(catchError(this.handleError<Movie>(`getMovie id=${ id }`)));
-  }
-
-  /** GET Show Seating
-   * @param id - id number of show
-   */
-  getShowSeating(id: number): Observable<Seat[]> {
-    const url = `${ this.showSeatingUrl }`;
-
-    let params = new HttpParams();
-    params = params.append('show_id', String(id));
-
-    return this.http.get<Seat[]>(url, {params})
-      .pipe(catchError(this.handleError<Seat[]>(`getShowSeating id=${ id }`)));
-  }
-
-    /** POST reservation
+  /** POST reservation
    * @param showID = id of selected show
      @param seatIDs - list of ids for selected seats
    */
-  reserveSeats(showID: number, seatIDs: number[]): Observable<Reservation[]> {
+  reserveSeats(showID: number, seatIDs: number[]): Observable<any> {
     const url = `${ this.reservationUrl }`;
 
     let params = new HttpParams();
     params = params.append('show_id', String(showID));
     for (let id of seatIDs) {
-      params = params.append('seatID', String(id));
+      params = params.append('seat_id', String(id));
     }
 
-    return this.http.get<Reservation[]>(url, {params})
-      .pipe(catchError(this.handleError<Reservation[]>(`reserveSeat, show id=${ showID }, seat ids=${ seatIDs.toString() }`)));
+    return this.http.post(url, this.httpOptions, {params})
+      .pipe(catchError(this.handleError(`reserveSeat, show id=${ showID }, seat ids=${ seatIDs.toString() }`)));
   }
 
 }

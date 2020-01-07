@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {TheaterApiService} from '../theater-api.service';
 
-import {Show} from '../models/show';
+import {ShowModel} from '../models/show.model';
 import {MovieOnDate} from '../models/movie-on-date';
 
 @Component({
@@ -9,12 +9,12 @@ import {MovieOnDate} from '../models/movie-on-date';
   templateUrl: './now-playing.html',
   styleUrls: ['./now-playing.css']
 })
-/** displays all show times for a specified date, organized by Movie Title. Default current date */
+/** displays all show times for a specified date, organized by MovieModel Title. Default current date */
 export class NowPlayingComponent implements OnInit {
   /* holds LOCALTIME */
   selectedDate: Date;
   /* shows returned from api for a selected date */
-  shows: Show[];
+  shows: ShowModel[];
   /* movies returned from api for a selected date */
   movies: MovieOnDate[];
   /* by default movie info hidden */

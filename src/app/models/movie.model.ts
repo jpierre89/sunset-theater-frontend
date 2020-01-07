@@ -1,5 +1,5 @@
-/** a movie without booking details returned from theater api */
-export class Movie {
+/** api model */
+export class MovieModel {
   id: number;
   title: string;
   runtime: string;
@@ -8,4 +8,5 @@ export class Movie {
   director: string;
   cast: number[];
   rating: string;
+  shows: number[];
 }

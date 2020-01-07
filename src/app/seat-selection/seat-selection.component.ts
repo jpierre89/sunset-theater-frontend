@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TheaterApiService} from '../theater-api.service';
-import {Seat} from '../models/seat';
+import {SeatModel} from '../models/seat.model';
 import {Row} from '../models/row';
-import {Reservation} from '../models/reservation';
+import {ReservationDetailModel} from '../models/reservation-Detail.model';
 
 @Component({
   selector: 'app-seat-selection',
@@ -11,8 +11,8 @@ import {Reservation} from '../models/reservation';
   styleUrls: ['./seat-selection.component.css']
 })
 export class SeatSelectionComponent implements OnInit {
-  // holds currently selected seats from user
-  selectedSeats: number[];
+  // contains selected seats from user before reservation is made
+  selectedSeats: SeatModel[];
   showID;
   /* rows in auditorium for show */
   rows: Row[];
@@ -25,10 +25,8 @@ export class SeatSelectionComponent implements OnInit {
     public router: Router
   ) {
     this.rows = new Array<Row>();
-    this.selectedSeats = new Array<number>();
+    this.selectedSeats = new Array<SeatModel>();
   }
-
-
 
   ngOnInit() {
     /* gets showID from route parammap
@@ -44,11 +42,16 @@ export class SeatSelectionComponent implements OnInit {
       .subscribe(seats => this.createRows(seats));
   }
 
+  getSeatAvailability(seat: SeatModel) {
+    this.theaterApiService.getSeatAvailability(seat.id, this.showID)
+      .subscribe(isReserved => seat.isReserved = isReserved)
+  }
+
   /* transforms sorted list of seats from API into rows for display
   * A1, A2, B1, B2, ...  ->  A1, A2
   *                          B1, B2
   */
-  createRows(seats: Seat[]): void {
+  createRows(seats: SeatModel[]): void {
     let lastRowName = '';
     for (const seat of seats) {
       let newRowName = seat.number.slice(0,1);
@@ -57,17 +60,26 @@ export class SeatSelectionComponent implements OnInit {
         this.rows.push(row);
         lastRowName = newRowName;
       }
-      // note - cannot use -1 to reference last elem
+      // cannot use -1 to reference last elem
       this.rows[this.rows.length - 1].seats.push(seat);
+
+      // get seat availability
+      this.getSeatAvailability(seat);
     }
   }
 
   reserveSeats() {
-    this.theaterApiService.reserveSeats(this.showID, this.selectedSeats)
+    // construct list of seat ids for reservation
+    let reserveIds = new Array<number>();
+    for (let seat of this.selectedSeats) {
+      reserveIds.push(seat.id);
+    }
+
+    this.theaterApiService.reserveSeats(this.showID, reserveIds)
       .subscribe(res => this.processResponse(res))
   }
 
-  processResponse(reservations: Reservation[]) {
+  processResponse(reservations: ReservationDetailModel[]) {
     // if reservation went through
     this.router.navigate(['/cart']);
     // TODO: else display selection failed.
@@ -77,22 +89,35 @@ export class SeatSelectionComponent implements OnInit {
    * @param seatId of seat to add
    * Does not add seat if seat already exists
    */
-  addSeat(seatId: number) {
-    const index = this.selectedSeats.indexOf(seatId, 0);
+  addSeat(seat: SeatModel) {
+    if (seat.isReserved) {
+      return;
+    }
+
+    const index = this.selectedSeats.indexOf(seat, 0);
     if (index > -1) {
       return;
     }
-    this.selectedSeats.push(seatId)
+
+    this.selectedSeats.push(seat)
   }
 
-  removeSeat(seatId: number) {
-    const index = this.selectedSeats.indexOf(seatId, 0);
+  removeSeat(seat: SeatModel) {
+    const index = this.selectedSeats.indexOf(seat, 0);
     if (index > -1) {
       this.selectedSeats.splice(index, 1);
     }
   }
 
   clearSeats() {
-    this.selectedSeats = new Array<number>();
+    this.selectedSeats = new Array<SeatModel>();
+  }
+
+  isSelected(seat: SeatModel): boolean {
+    const index = this.selectedSeats.indexOf(seat, 0);
+    if (index > -1) {
+      return true;
+    }
+    return false;
   }
 }

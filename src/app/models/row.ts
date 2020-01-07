@@ -1,5 +1,5 @@
-import {Seat} from './seat';
+import {SeatModel} from './seat.model';
 
 export class Row {
-  seats: Seat[] = new Array<Seat>();
+  seats: SeatModel[] = new Array<SeatModel>();
 }
