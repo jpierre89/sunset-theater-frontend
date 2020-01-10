@@ -1,0 +1,28 @@
+<div class="card">
+  <h4 class="card-header">Log In</h4>
+  <div class="card-body">
+
+    <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit($event)">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <!--ngClass directive adds css class form-submitted to input whenever formSubmitted component field is true-->
+        <input type="email" id="email" class="form-control"
+               formControlName="email" [ngClass]="{'form-submitted': formSubmitted}"
+               placeholder="Enter email"/>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="text" id="password" class="form-control"
+               formControlName="password" [ngClass]="{'form-submitted': formSubmitted}"
+               placeholder="Enter password"/>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <a id="register" href="" routerLink='/registration'>register</a>
+    </form>
+
+  </div>
+</div>
+
+
+

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
-// nav bar always present at top of application
+import {UserModel} from '../_models/user.model';
+import {AuthenticationService} from '../_services/authentication.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -9,10 +10,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavBarComponent implements OnInit {
   title = 'Sunset Theater';
+  currentUser: UserModel;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private authenticationService: AuthenticationService
+  ) {
+    this.authenticationService.currentUser.subscribe(res => this.currentUser = res);
+  }
 
   ngOnInit() {
+  }
+
+  logout() {
+    this.authenticationService.logout();
   }
 
 }

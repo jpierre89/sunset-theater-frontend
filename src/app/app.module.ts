@@ -1,33 +1,42 @@
+/* angular */
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+/* components */
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NowPlayingComponent } from './now-playing/now-playing.component';
 import { DatePickerComponent } from './date-picker/date-picker.component';
-
-/* services */
-import {TheaterApiService} from './theater-api.service';
-import { TimePipe } from './time.pipe';
 import { SeatSelectionComponent } from './seat-selection/seat-selection.component';
 import { CartComponent } from './cart/cart.component';
+import { LogInComponent } from './log-in/log-in.component';
+import { RegistrationComponent } from './registration/registration.component';
+
+/* services */
+import {TheaterApiService} from './_services/theater-api.service';
+
+/* pipes */
+import { TimePipe } from './pipes/time.pipe';
 
 /* ngx-boostrap */
 import {BsDatepickerModule} from 'ngx-bootstrap';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import {ReactiveFormsModule} from '@angular/forms';
+
+/* interceptors */
+import {JwtInterceptor} from './_common/jwt-interceptor';
+import {ErrorInterceptor} from './_common/error-interceptor';
 
 /* defines the root module, named AppModule, that tells Angular
-   how to assemble the application. Initially declares only the
-   AppComponent. As you add more components to the app, they must
-   be declared here */
+   how to assemble the application. */
 
 /* metadata for app */
 @NgModule({
-  /* declare components that app needs: every component declared in exactly one NgModule */
+  /* declare components that app moduele uses: every component is declared in exactly one NgModule */
   declarations: [
     AppComponent,
     NavBarComponent,
@@ -36,21 +45,28 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
     TimePipe,
     SeatSelectionComponent,
     CartComponent,
+    LogInComponent,
+    RegistrationComponent,
   ],
-  /* external modules for app */
+  /* external modules used by app module */
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
+      /* ngx-bootstrap  */
+      BsDatepickerModule.forRoot(),
+      ButtonsModule.forRoot(),
+      CollapseModule.forRoot(),
 
-    /* ngx-bootstrap  */
-    BsDatepickerModule.forRoot(),
-    ButtonsModule.forRoot(),
-    CollapseModule.forRoot(),
-
+      BrowserModule,
+      AppRoutingModule,
+      HttpClientModule,
+      BrowserAnimationsModule,
+      ReactiveFormsModule,
+    ],
+  /* injectables */
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    TheaterApiService,
   ],
-  providers: [TheaterApiService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

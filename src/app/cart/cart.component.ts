@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {TheaterApiService} from '../theater-api.service';
-import {ReservationDetailModel} from '../models/reservation-Detail.model';
-import {ShowModel} from '../models/show.model';
+import {TheaterApiService} from '../_services/theater-api.service';
+import {ReservationDetailModel} from '../_models/reservation-Detail.model';
+import {ShowModel} from '../_models/show.model';
 
 @Component({
   selector: 'app-cart',

@@ -4,8 +4,11 @@ import {RouterModule, Routes} from '@angular/router';
 import {NowPlayingComponent} from './now-playing/now-playing.component';
 import {SeatSelectionComponent} from './seat-selection/seat-selection.component';
 import {CartComponent} from './cart/cart.component';
+import {LogInComponent} from './log-in/log-in.component';
+import {RegistrationComponent} from './registration/registration.component';
+import {AuthGuard} from './_common/auth.guard';
 
-/* best practice to load and configure the router in separate, top level
+/* best practice to load and configure the router in a separate, top level
  module that is dedicated to routing and imported from the root AppModule.
  By convention, the module class name is AppRoutingModule and it belongs in the
  app-routing.module.ts in the src/app folder */
@@ -14,12 +17,19 @@ import {CartComponent} from './cart/cart.component';
     path: a string that matches the url in the browser address bar
     component: the component that the router should create when navigating to this route  */
 const routes: Routes = [
-  /* this path redirects a URL that fully matches the empty path */
-  { path: '', redirectTo: 'now-playing', pathMatch: 'full'},
-  { path: 'now-playing', component: NowPlayingComponent },
-  /* this is parameterized route */
-  { path: 'seat-selection/:show-id', component: SeatSelectionComponent },
-  { path: 'cart', component: CartComponent}
+  { path: 'now-playing', component: NowPlayingComponent, canActivate: [AuthGuard] },
+  { path: '', component: NowPlayingComponent, canActivate: [AuthGuard]},
+  { path: 'login', component: LogInComponent},
+  { path: 'registration', component: RegistrationComponent},
+  { path: 'seat-selection/:show-id', component: SeatSelectionComponent, canActivate: [AuthGuard] },
+  { path: 'cart', component: CartComponent, canActivate: [AuthGuard]},
+
+  /* else redirect to root */
+  { path: '**', redirectTo: ''},
+
+  /* this path redirects a URL that fully matches the empty path
+  { path: '', redirectTo: 'login', pathMatch: 'full'},
+  { path: 'now-playing', component: NowPlayingComponent }, */
 ];
 
 /* metadata initializes router and starts it listening for browser location changes */

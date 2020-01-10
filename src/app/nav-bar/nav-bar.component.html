@@ -1,9 +1,12 @@
-<nav id="mainNav" class="navbar navbar-default">
+<nav id="mainNav" class="navbar navbar-default" *ngIf="currentUser">
   <div class="container-fluid">
       <div class="navbar-header">
           <a class="title" routerLink="now-playing"><h2>Sunset Theater</h2></a>
       </div>
-      <a class="title" routerLink="cart"><h2>Reservations</h2></a>
+      <div style="display: block">
+        <a style="display: inline-block" class="title" routerLink="cart">Reservations</a>
+        <a style="display: inline-block" class="nav-item nav-link" (click)="logout()" href="">Logout</a>
+      </div>
   </div>
 </nav>
 

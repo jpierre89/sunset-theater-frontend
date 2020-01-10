@@ -10,6 +10,14 @@ body {
   margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.container {
+  background-color: white;
+  height: 100%;
+  width: 50%;
+  padding: 0px;
+}
+
+
 
 h1 {
   font-size: 250%;

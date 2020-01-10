@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {TheaterApiService} from '../theater-api.service';
+import {TheaterApiService} from '../_services/theater-api.service';
 
-import {ShowModel} from '../models/show.model';
-import {MovieOnDate} from '../models/movie-on-date';
+import {ShowModel} from '../_models/show.model';
+import {MovieOnDate} from '../_models/movie-on-date';
+import {FormControl} from '@angular/forms';
+import {AuthenticationService} from '../_services/authentication.service';
+import {UserModel} from '../_models/user.model';
 
 @Component({
   selector: 'app-now-playing',
@@ -11,7 +14,7 @@ import {MovieOnDate} from '../models/movie-on-date';
 })
 /** displays all show times for a specified date, organized by MovieModel Title. Default current date */
 export class NowPlayingComponent implements OnInit {
-  /* holds LOCALTIME */
+  /* local time */
   selectedDate: Date;
   /* shows returned from api for a selected date */
   shows: ShowModel[];
@@ -24,7 +27,8 @@ export class NowPlayingComponent implements OnInit {
     /* inject shared instance service (singleton). the parameter both defines a property and identifies
        it as a theaterApiService injection site. */
     private theaterApiService: TheaterApiService,
-  ) { }
+    private authenticationService: AuthenticationService,
+  ) {}
 
   ngOnInit() {}
 

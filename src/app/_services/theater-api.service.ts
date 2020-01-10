@@ -3,13 +3,14 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import {MovieModel} from './models/movie.model';
-import {ShowModel} from './models/show.model';
+import {MovieModel} from '../_models/movie.model';
+import {ShowModel} from '../_models/show.model';
 import {Params} from '@angular/router';
-import {MovieOnDate} from './models/movie-on-date';
-import {SeatModel} from './models/seat.model';
-import {ReservationDetailModel} from './models/reservation-Detail.model';
-import {AuditoriumModel} from './models/auditorium.model';
+import {MovieOnDate} from '../_models/movie-on-date';
+import {SeatModel} from '../_models/seat.model';
+import {ReservationDetailModel} from '../_models/reservation-Detail.model';
+import {AuditoriumModel} from '../_models/auditorium.model';
+import {environment} from '../../environments/environment';
 
 /* When you provide the service at the root level, angular creates a single, shared instance of
    this service and injects it into any class that asks for it. Registering the provider in the
@@ -21,17 +22,16 @@ import {AuditoriumModel} from './models/auditorium.model';
   providedIn: 'root'
 })
 export class TheaterApiService {
-  private baseUrl = 'http://127.0.0.1:5000';
-  private movieUrl = `${ this.baseUrl }/movie`;
-  private showUrl = `${ this.baseUrl }/show`;
-  private auditoriumUrl = `${ this.baseUrl }/auditorium`;
-  private showSeatingUrl = `${ this.baseUrl }/show/seating`;
-  private seatAvailabilityUrl = `${ this.baseUrl }/seat/reserved`;
-  private showsByDateUrl = `${ this.baseUrl }/shows/date`;
-  private moviesByDateUrl = `${ this.baseUrl }/movies/date`;
-  private allMoviesUrl = `${ this.baseUrl }/movies/all`;
-  private reservationUrl = `${ this.baseUrl }/reservations`;
-  private showsByUserUrl = `${ this.baseUrl }/reservations/user/shows`;
+  private movieUrl = `${ environment.apiUrl }/movie`;
+  private showUrl = `${ environment.apiUrl }/show`;
+  private auditoriumUrl = `${ environment.apiUrl }/auditorium`;
+  private showSeatingUrl = `${ environment.apiUrl }/show/seating`;
+  private seatAvailabilityUrl = `${ environment.apiUrl }/seat/reserved`;
+  private showsByDateUrl = `${ environment.apiUrl }/shows/date`;
+  private moviesByDateUrl = `${ environment.apiUrl }/movies/date`;
+  private allMoviesUrl = `${ environment.apiUrl }/movies/all`;
+  private reservationUrl = `${ environment.apiUrl }/reservations`;
+  private showsByUserUrl = `${ environment.apiUrl }/reservations/user/shows`;
 
   /* api expects special header, GET req doesnt seem to require */
   httpOptions = {

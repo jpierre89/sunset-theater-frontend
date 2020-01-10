@@ -1,0 +1,15 @@
+/* Angular adds some classes to each form field which correspond to the state
+   of the fields when the form just rendered and as the user interacts with them.
+   ng-valid, ng-invalid, ng-touched, ng-untouched, ng-pristine, ng-pending, ng-dirty*/
+
+.ng-valid.ng-dirty:not(form) {
+  border: solid 2px lightgreen;
+}
+
+.ng-invalid.ng-dirty:not(form), .ng-invalid:not(form).form-submitted {
+  border: solid 2px lightcoral;
+}
+#register {
+  float: right;
+  padding-top: 7px;
+}

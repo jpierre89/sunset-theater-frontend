@@ -1,24 +1,14 @@
-#selectedDate {
-  padding-left: 25px;
-}
-
 #titleHeader {
   display: block;
-  margin-block: 15px;
-  margin-bottom: 15px;
 }
 
 #nowPlaying {
-  display: inline-block;;
-
 }
 
 #selectedDate {
-  display: inline-block;
 }
 
 .movieShowTimes {
-  padding-top: 40px;
 }
 
 .movieTitle {

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {TheaterApiService} from '../theater-api.service';
-import {SeatModel} from '../models/seat.model';
-import {Row} from '../models/row';
-import {ReservationDetailModel} from '../models/reservation-Detail.model';
+import {TheaterApiService} from '../_services/theater-api.service';
+import {SeatModel} from '../_models/seat.model';
+import {Row} from '../_models/row';
+import {ReservationDetailModel} from '../_models/reservation-Detail.model';
 
 @Component({
   selector: 'app-seat-selection',
