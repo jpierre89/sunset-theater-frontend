@@ -5,7 +5,7 @@ import {ShowModel} from '../_models/show.model';
 import {MovieOnDate} from '../_models/movie-on-date';
 import {FormControl} from '@angular/forms';
 import {AuthenticationService} from '../_services/authentication.service';
-import {UserModel} from '../_models/user.model';
+import {jwtToken} from '../_models/jwtToken';
 
 @Component({
   selector: 'app-now-playing',

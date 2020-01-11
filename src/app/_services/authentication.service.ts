@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {UserModel} from '../_models/user.model';
+import {jwtToken} from '../_models/jwtToken';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {environment} from '../../environments/environment'; // not production
@@ -27,18 +27,17 @@ import {environment} from '../../environments/environment'; // not production
 })
 export class AuthenticationService {
   private accessUrl = `${ environment.apiUrl }/access`;
-
-  private currentUserSubject: BehaviorSubject<UserModel>;
-  public currentUser: Observable<UserModel>;
+  private currentUserSubject: BehaviorSubject<jwtToken>;
+  public currentUser: Observable<jwtToken>;
 
   constructor(
     private http: HttpClient
   ) {
-    this.currentUserSubject = new BehaviorSubject<UserModel>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<jwtToken>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  public get currentUserValue(): UserModel {
+  public get currentUserValue(): jwtToken {
     return this.currentUserSubject.value;
   }
 

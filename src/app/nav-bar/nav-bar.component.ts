@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {UserModel} from '../_models/user.model';
+import {jwtToken} from '../_models/jwtToken';
 import {AuthenticationService} from '../_services/authentication.service';
 import {Router} from '@angular/router';
 
@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
 })
 export class NavBarComponent implements OnInit {
   title = 'Sunset Theater';
-  currentUser: UserModel;
+  currentUser: jwtToken;
 
   constructor(
     private router: Router,
