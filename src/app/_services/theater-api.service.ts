@@ -213,7 +213,7 @@ export class TheaterApiService {
   }
 
   /** DELETE reservation
-   * @param res_id - id of reservation to delete
+   * @param reservationId
    */
     removeReservation(reservationId: number): Observable<any> {
       const url = `${ this.reservationUrl }`;

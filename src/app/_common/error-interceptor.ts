@@ -16,13 +16,20 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(catchError(err => {
+      // jwt token missing, invalid, expired
       if (err.status == 401) {
-        alert("error interceptor logging out");
+        // Try to get valid auth token from refresh token ..
+        // alert("error interceptor logging out");
         this.authenticationService.logout();
         // TODO deprecated
         location.reload(true);
       }
-
+      else if (err.status == 404) {
+        // resource not found - ignore
+      }
+      else {
+        alert('Error Code: ' + err.status + ', ' + err.statusText)
+      }
       const error = err.error.message || err.statusText;
       return throwError(error);
     }))

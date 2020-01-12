@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import {jwtToken} from '../_models/jwtToken';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {map} from 'rxjs/operators';
-import {environment} from '../../environments/environment'; // not production
+import {environment} from '../../environments/environment';
+import {Router} from '@angular/router';
 
 /**
  * - The authentication service is used to login & logout of the Angular app,
@@ -22,17 +23,24 @@ import {environment} from '../../environments/environment'; // not production
  * credit to jasonwatmore.com
  */
 
+class RefreshResponse {
+  accessToken: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
   private accessUrl = `${ environment.apiUrl }/access`;
   private registrationUrl = `${ environment.apiUrl }/registration`;
+  private refreshUrl = `${ environment.apiUrl }/refresh`;
+
   private currentUserSubject: BehaviorSubject<jwtToken>;
   public currentUser: Observable<jwtToken>;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router,
   ) {
     this.currentUserSubject = new BehaviorSubject<jwtToken>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
@@ -68,5 +76,7 @@ export class AuthenticationService {
     localStorage.removeItem('currentUser');
     // notify all subscribers that user has logged out
     this.currentUserSubject.next(null);
+    this.router.navigate(['/login']);
   }
+
 }

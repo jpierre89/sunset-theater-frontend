@@ -23,7 +23,7 @@
 }
 
 a:hover {
-  color: orange;
+  color: darkorange;
   /* for movie info anchor which has no reference but used for collapsable */
   cursor: pointer;
 }
