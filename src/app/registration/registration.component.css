@@ -9,3 +9,13 @@
 #back {
   float: right;
 }
+
+.title {
+  text-align: center;
+  margin: 3vh;
+}
+
+.formdiv {
+  max-width: 500px;
+  margin: auto;
+}

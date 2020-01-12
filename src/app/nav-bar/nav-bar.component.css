@@ -1,11 +1,28 @@
 .navStyle {
   background-color: lightcyan;
+  border-bottom-left-radius:  25px;
+  border-bottom-right-radius:  25px;
 }
 
 #navMenu {
   display: block;
   text-align: center;
+
 }
 
-#title {
+#theaterTitle {
+  font-size: 2.25em;
+}
+
+.option {
+  margin: 1vw;
+  outline: 0;
+  font-size: 1.75em;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.option:hover {
+  color: darkorange;
 }

@@ -1,11 +1,11 @@
 <nav class="navbar navbar-default navStyle" *ngIf="currentUser">
   <div class="container-fluid">
       <div class="navbar-header">
-          <a routerLink="now-playing"><h2 id="title">Sunset Theater</h2></a>
+          <button class="option" id="theaterTitle" routerLink="now-playing">Sunset Theater</button>
       </div>
       <div id="navMenu">
-        <a style="display: inline-block" class="title" routerLink="cart">Reservations</a>
-        <a style="display: inline-block" class="nav-item nav-link" (click)="logout()" href="">Logout</a>
+        <button style="display: inline-block" class="nav-item nav-link option" routerLink="cart">Reservations</button>
+        <button style="display: inline-block" class="nav-item nav-link option" (click)="logout()">Logout</button>
       </div>
   </div>
 </nav>

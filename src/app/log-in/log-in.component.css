@@ -11,5 +11,14 @@
 }
 #register {
   float: right;
-  padding-top: 7px;
+}
+
+.title {
+  text-align: center;
+  margin: 3vh;
+}
+
+.formdiv {
+  max-width: 500px;
+  margin: auto;
 }
