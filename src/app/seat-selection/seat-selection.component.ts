@@ -69,6 +69,10 @@ export class SeatSelectionComponent implements OnInit {
   }
 
   reserveSeats() {
+    if (this.selectedSeats.length < 1) {
+      return;
+    }
+
     // construct list of seat ids for reservation
     let reserveIds = new Array<number>();
     for (let seat of this.selectedSeats) {

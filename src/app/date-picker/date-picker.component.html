@@ -1,12 +1,11 @@
-<div class="row">
-  <div class="col form-group">
+<div>
     <input type="text"
            placeholder="Choose a date"
            class="form-control"
+           id="picker"
            placement="bottom"
            [minDate] = "minDate"
            [bsConfig]="dpConfig"
            (bsValueChange)="changeDate($event)"
            bsDatepicker>
-  </div>
 </div>

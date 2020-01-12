@@ -1,47 +1,68 @@
 <div id="titleHeader" class="row">
-  <!-- only columns are placed inside a row -->
   <div class="col">
     <h1 id="nowPlaying">Now Playing</h1>
-    <h2 id="selectedDate">{{selectedDate.toDateString()}}</h2>
-  </div>
-</div>
-<div class="row">
-  <div class="col">
     <!-- when dateEmitter method called on app-date-picker, updateMovieTimes($event) is called -->
     <app-date-picker (dateEmitter)="displayMovieTimes($event)"></app-date-picker>
   </div>
 </div>
+<div class="row">
+  <div class="col">
+    <h2 id="selectedDate">{{selectedDate.toDateString()}}</h2>
+  </div>
+</div>
+<div *ngIf="!movies">
+  <hr>
+  <h3>No movies playing on this day</h3>
+</div>
 <div class="movieShowTimes" *ngFor="let movie of movies">
   <hr>
-  <a class="movieTitle"
+  <a class="movieTitle h4"
      (click)="movie.collapsed = !movie.collapsed"
      [attr.aria-expanded]="!movie.collapsed"
      aria-controls=movie.id>
     {{ movie.title }}
   </a>
   <div id=movie.id
+       class="lead"
        [collapse]="!movie.collapsed"
        [isAnimated]="true">
-    <h6>Genre: {{ movie.genre.name }}</h6>
-    <h6>Rating: {{ movie.rating }}</h6>
-    <h6>Runtime: {{ movie.runtime}}</h6>
-    <h6>Director: {{ movie.director.name }}</h6>
-    <div style="display: block">
-      <span *ngIf="movie.actors" style="display: inline-block" >
-        <h6>Cast:</h6>
-      </span>
-      <span *ngFor="let actor of movie.actors" style="display: inline-block; padding-left: 5px">
-        <h6>{{actor.name}}</h6>
-      </span>
+    <div>
+      <span class="detailHeader">Genre</span>
+      <span>: </span>
+      <span>{{ movie.genre.name }}</span>
     </div>
-    <h6>Description: {{ movie.description }}</h6>
+    <div>
+      <span class="detailHeader">Rating: </span>
+      <span>: </span>
+      <span>{{ movie.rating }}</span>
+    </div>
+    <div>
+      <span class="detailHeader">Run time</span>
+      <span>: </span>
+      <span>{{ movie.runtime}}</span>
+    </div>
+    <div>
+      <span class="detailHeader">Director</span>
+      <span>: </span>
+      <span>{{ movie.director.name }}</span>
+    </div>
+    <ng-container *ngIf="movie.actors">
+      <span class="detailHeader">Cast</span>
+      <span>: </span>
+      <span *ngFor="let actor of movie.actors" style="padding-left: 5px">{{actor.name}}</span>
+    </ng-container>
+    <div>
+      <span class="detailHeader">Description</span>
+      <span>: </span>
+      <span>{{ movie.description }}</span>
+    </div>
   </div>
   <div class="row">
     <div *ngFor="let show of shows">
       <span class="col" *ngIf="show.movie.id == movie.id">
         <button [id]="movie.id"
                 type="button"
-                class="btn btn-outline-primary showbtn"
+                class="btn btn-outline-secondary showbtn"
                 routerLink="/seat-selection/{{ show.id }}">
           {{ show.time | time }}
         </button>

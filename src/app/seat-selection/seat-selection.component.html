@@ -1,34 +1,38 @@
-<h1>Seat Selection</h1>
+<div>
+  <h2 id="seatSelection">Choose Seats</h2>
 
-<div *ngFor="let row of rows" style="display: block">
-  <span *ngFor="let seat of row.seats"
-        style="display: inline-block">
-    <div class="square rounded"
-         [class.selected]="isSelected(seat)"
-         [class.unavailable]="seat.isReserved"
-         [class.empty]="seat.is_empty_space"
-         (click)="addSeat(seat)">
-      <p>{{ seat.number }}</p>
+  <div id="options">
+    <div id="selected">
+      <h5 style="display: inline-block" *ngIf="this.selectedSeats.length > 0"> Seats: </h5>
+      <span *ngFor="let seat of selectedSeats">
+        <h5 style="display: inline-block"> {{ seat.number }} </h5>
+      </span>
     </div>
-  </span>
-</div>
-
-
-
-<div id="options">
-  <div id="selected">
-    <span *ngIf="this.selectedSeats">Seats Selected: </span>
-    <span *ngFor="let seat of selectedSeats">
-      {{ seat.number }}
-    </span>
+    <div class="btn-group">
+      <button class="btn btn-outline-secondary" (click)="clearSeats()">Refresh</button>
+      <button class="btn btn-outline-secondary" (click)="reserveSeats()">Reserve</button>
+    </div>
   </div>
-  <span id="refresh">
-    <button (click)="clearSeats()">Refresh</button>
-  </span>
-  <span id="reserve">
-    <button (click)="reserveSeats()">Reserve Seats</button>
-  </span>
+  <hr>
+
+  <div id="seating">
+    <div id="screen"></div>
+    <div class="seatRow" *ngFor="let row of rows">
+      <div *ngFor="let seat of row.seats" style="display: inline-block">
+        <div class="square rounded"
+             [class.selected]="isSelected(seat)"
+             [class.unavailable]="seat.isReserved"
+             [class.empty]="seat.is_empty_space"
+             (click)="addSeat(seat)">
+          <p class="number">{{ seat.number }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+
+
 
 
 

@@ -27,6 +27,7 @@ import {environment} from '../../environments/environment'; // not production
 })
 export class AuthenticationService {
   private accessUrl = `${ environment.apiUrl }/access`;
+  private registrationUrl = `${ environment.apiUrl }/registration`;
   private currentUserSubject: BehaviorSubject<jwtToken>;
   public currentUser: Observable<jwtToken>;
 
@@ -47,7 +48,7 @@ export class AuthenticationService {
     params = params.append('password', String(password));
     params = params.append('first_name', String(firstName));
     params = params.append('last_name', String(lastName));
-    return this.http.put<any>(this.accessUrl, params);
+    return this.http.post<any>(this.registrationUrl, params);
   }
 
   /* if response is 401, ErrorInterceptor handles */

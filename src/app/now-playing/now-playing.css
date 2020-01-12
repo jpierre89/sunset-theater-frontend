@@ -1,11 +1,15 @@
 #titleHeader {
   display: block;
+  margin-top: 2vh;
 }
 
 #nowPlaying {
+  text-align: center;
 }
 
 #selectedDate {
+  margin-top: 4vh;
+  margin-bottom: 0.5vh;
 }
 
 .movieShowTimes {
@@ -33,10 +37,6 @@ a:hover {
   margin-top: 10px;
 }
 
-.test {
-  background-color: gold;
-}
-
-.test2 {
-  background-color: green;
+.detailHeader {
+  text-decoration: underline;
 }

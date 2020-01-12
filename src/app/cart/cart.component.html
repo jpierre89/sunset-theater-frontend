@@ -1,14 +1,16 @@
-<h1>Reservations</h1>
+<h1 id="resHeader">Reservations</h1>
 
 <div *ngIf="reservations.length > 0; else noReservations">
   <div *ngFor="let res of reservations" class="res">
+    <hr>
     <h5> {{ res.show.movie.title }}</h5>
     <h5>{{ res.show.date }} at {{ res.show.time | time }}</h5>
     <h5>{{ res.auditorium.name }}, seat {{ res.seat.number }}</h5>
-    <button (click)="removeReservation(res.id)">Remove</button>
+    <button class="btn btn-outline-secondary" (click)="removeReservation(res.id)">Remove</button>
   </div>
 </div>
 
 <ng-template #noReservations>
+  <hr>
   <h5>Make a reservation to have it added to your list</h5>
 </ng-template>

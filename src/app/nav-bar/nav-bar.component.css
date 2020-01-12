@@ -1,3 +1,11 @@
-#mainNav {
+.navStyle {
   background-color: lightcyan;
+}
+
+#navMenu {
+  display: block;
+  text-align: center;
+}
+
+#title {
 }
