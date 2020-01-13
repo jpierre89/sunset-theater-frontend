@@ -4,9 +4,9 @@
 }
 
 #screen {
-  width: 50%;
+  width: 80%;
   margin: 5vh auto;
-  height: 5vw;
+  height: 1vw;
   background-color: transparent;
   border-top-left-radius: 14vw;
   border-top-right-radius: 14vw;
@@ -16,6 +16,7 @@
 
 #seating {
   text-align: center;
+  margin: auto;
 }
 
 .seatRow {
@@ -26,12 +27,16 @@
 .square {
   height: 4vw;
   width: 4vw;
+  max-height: 36px;
+  max-width: 36px;
+  min-height: 5px;
+  min-width: 5px;
   border-width: 1px;
   border-style: solid;
   border-color: cyan;
   background-color: transparent;
   cursor: pointer;
-  margin: 1vw;
+  margin: 5px;
 }
 
 .square:hover {
@@ -39,7 +44,14 @@
 }
 
 .number {
-  font-size: 2.5vw;
+  font-size: 2vw;
+}
+
+/* 0.2 * 800px = 16px */
+@media screen and (min-width: 800px) {
+  .number {
+    font-size: 16px;
+  }
 }
 
 .selected {
@@ -57,7 +69,8 @@
 }
 
 #options {
-  margin-top: 5vh;
+  margin: 2.5vh auto;
+  text-align: center;
 }
 
 .empty {

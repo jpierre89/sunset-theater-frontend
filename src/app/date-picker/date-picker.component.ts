@@ -25,7 +25,7 @@ export class DatePickerComponent implements OnInit {
 
 
   /* fires when user selects or enters a date on datepicker */
-  private changeDate(event: Date) {
+  public changeDate(event: Date) {
     this.selectedDate = event;
     this.dateEmitter.emit(this.selectedDate);
   }
