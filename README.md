@@ -9,8 +9,7 @@
 * OS: Linux x64
 * Angular CLI
     * `npm install -g @angular/cli`
-* Angular Material
-    * `npm install --save @angular/material @angular/cdk @angular/animations`
+* ngx bootstrap
 
 ### Dev Server
 
