@@ -1,6 +1,6 @@
-# Theater
+# Sunset Theater Frontend
 
->Single page application powered by Angular consuming Theater_API
+>SPA powered by Angular consuming Theater_API
 
 ### Set-up
 * Angular CLI: 8.3.21

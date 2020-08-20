@@ -1,8 +1,8 @@
 /* angular */
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {AppRoutingModule} from './app-routing.module';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 /* components */
@@ -16,20 +16,20 @@ import { LogInComponent } from './log-in/log-in.component';
 import { RegistrationComponent } from './registration/registration.component';
 
 /* services */
-import {TheaterApiService} from './_services/theater-api.service';
+import { TheaterApiService } from './_services/theater-api.service';
 
 /* pipes */
 import { TimePipe } from './pipes/time.pipe';
 
 /* ngx-boostrap */
-import {BsDatepickerModule} from 'ngx-bootstrap';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
-import {ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 /* interceptors */
-import {JwtInterceptor} from './_common/jwt-interceptor';
-import {ErrorInterceptor} from './_common/error-interceptor';
+import { JwtInterceptor } from './_common/jwt-interceptor';
+import { ErrorInterceptor } from './_common/error-interceptor';
 
 /* defines the root module, named AppModule, that tells Angular
    how to assemble the application. */
