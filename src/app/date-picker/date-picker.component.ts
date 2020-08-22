@@ -1,6 +1,4 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-//import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-//import { MatNativeDateModule } from '@angular/material/core';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({

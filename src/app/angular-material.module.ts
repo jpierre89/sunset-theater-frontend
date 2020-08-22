@@ -1,55 +1,25 @@
-/* import all Angular Material modules here (many not used) */
-
 import { NgModule } from '@angular/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCardModule } from '@angular/material/card';
 
-import {
-   MatButtonModule,
-   MatToolbarModule,
-   MatIconModule,
-   MatBadgeModule,
-   MatSidenavModule,
-   MatListModule,
-   MatGridListModule,
-   MatFormFieldModule,
-   MatInputModule,
-   MatSelectModule,
-   MatRadioModule,
-   MatDatepickerModule,
-   MatNativeDateModule,
-   MatChipsModule,
-   MatTooltipModule,
-   MatTableModule,
-   MatPaginatorModule,
-   MatCardModule
-} from '@angular/material';
 
 const material = [
     MatButtonModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatBadgeModule,
-    MatListModule,
-    MatGridListModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule,
-    MatRadioModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatChipsModule,
     MatTooltipModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatCardModule
+    MatCardModule,
+    MatDialogModule,
 ];
 
 @NgModule({
    imports: [ material ],
    exports: [ material ],
    providers: [
-      MatDatepickerModule, MatNativeDateModule
    ]
 })
-
 export class AngularMaterialModule { }

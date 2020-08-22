@@ -9,16 +9,22 @@
 .ng-invalid.ng-dirty:not(form), .ng-invalid:not(form).form-submitted {
   border: solid 2px lightcoral;
 }
-#register {
-  float: right;
-}
 
-.title {
+.loginTitle {
   text-align: center;
-  margin: 3vh;
+  padding: 5vh;
 }
 
-.formdiv {
-  max-width: 500px;
+.form-title {
+  text-align: center;
+}
+
+.center-login {
   margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.loginFormHeader {
+  text-align: center;
 }

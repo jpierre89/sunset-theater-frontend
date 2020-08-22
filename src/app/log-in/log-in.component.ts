@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AuthenticationService} from '../_services/authentication.service';
-import {first} from 'rxjs/operators';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenticationService } from '../_services/authentication.service';
+import { first } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog'
+import { LogInErrorDialogComponent } from '../log-in-error-dialog/log-in-error-dialog.component';
+
 
 @Component({
   selector: 'app-log-in',
@@ -14,18 +17,21 @@ export class LogInComponent implements OnInit {
   formSubmitted = false;
   returnUrl: string;
   error: '';
-  loading = false;
+  invalidCredentials = false;
+
+  get form() {return this.loginForm.controls;}
 
   constructor(
     private formBuilder: FormBuilder,
     public router: Router,
     private route: ActivatedRoute,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    public dialog: MatDialog
   ) {
     // redirect if user already logged in
-    if (this.authenticationService.currentUserValue) {
-      this.router.navigate(['/now-playing']);
-    }
+    //if (this.authenticationService.currentUserValue) {
+      //this.router.navigate(['/now-playing']);
+    //}
   }
 
   ngOnInit() {
@@ -34,9 +40,6 @@ export class LogInComponent implements OnInit {
     this.returnUrl = '/';
   }
 
-  // convenience
-  get f() {return this.loginForm.controls;}
-
   buildForm() {
     this.loginForm = this.formBuilder.group({
       email: [null, [Validators.required, Validators.email]],
@@ -44,26 +47,32 @@ export class LogInComponent implements OnInit {
     })
   }
 
-
   onSubmit(event) {
+    if (event.submitter.id === 'guest') {
+      this.loginGuest();
+      return;
+    }
+
     this.formSubmitted = true;
 
     if (this.loginForm.invalid) {
       return;
     }
 
-    this.loading = true;
     // use service to attempt login with form's username and password
-    this.authenticationService.login(this.f.email.value, this.f.password.value)
+    this.authenticationService.login(this.form.email.value, this.form.password.value)
       .pipe(first())
-      .subscribe(date => {
-          this.router.navigate(['/now-playing']);
+      .subscribe(data => {
+          this.router.navigate(['/now-playing']);        
         },
         error => {
           this.error = error;
-          alert("email or password not valid");
-          this.loading = false;
         });
+
+  }
+
+  loginGuest() {
+    return;
   }
 
 }

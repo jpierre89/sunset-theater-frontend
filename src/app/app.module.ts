@@ -14,6 +14,7 @@ import { SeatSelectionComponent } from './seat-selection/seat-selection.componen
 import { CartComponent } from './cart/cart.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { LogInErrorDialogComponent } from './log-in-error-dialog/log-in-error-dialog.component';
 
 /* services */
 import { TheaterApiService } from './_services/theater-api.service';
@@ -31,6 +32,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { JwtInterceptor } from './_common/jwt-interceptor';
 import { ErrorInterceptor } from './_common/error-interceptor';
 
+import { MatDialogModule } from '@angular/material/dialog';
+
 /* defines the root module, named AppModule, that tells Angular
    how to assemble the application. */
 
@@ -47,6 +50,7 @@ import { ErrorInterceptor } from './_common/error-interceptor';
     CartComponent,
     LogInComponent,
     RegistrationComponent,
+    LogInErrorDialogComponent,
   ],
   /* external modules used by app module */
   imports: [
@@ -60,6 +64,8 @@ import { ErrorInterceptor } from './_common/error-interceptor';
       HttpClientModule,
       BrowserAnimationsModule,
       ReactiveFormsModule,
+
+      MatDialogModule,
     ],
   /* injectables */
   providers: [
