@@ -11,10 +11,9 @@ import {AuthenticationService} from '../_services/authentication.service';
 })
 export class RegistrationComponent implements OnInit {
   regForm: FormGroup;
-  formSubmitted = false;
+  formSubmitted: boolean = false;
   returnUrl: string;
-  error: '';
-  loading = false;
+  error: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,15 +25,13 @@ export class RegistrationComponent implements OnInit {
     this.buildForm();
   }
 
-  // convenience
-  get f() {return this.regForm.controls;}
+  get form() {return this.regForm.controls;}
 
   buildForm() {
     this.regForm = this.formBuilder.group({
-      email: [null, [Validators.required, Validators.email]],
+      username: [null, [Validators.required]],
       password: [null, [Validators.required]],
-      firstName: [null, [Validators.required]],
-      lastName: [null, [Validators.required]],
+      firstName: [null],
     })
   }
 
@@ -45,16 +42,14 @@ export class RegistrationComponent implements OnInit {
       return;
     }
 
-    this.loading = true;
-    this.authenticationService.register(this.f.email.value, this.f.password.value, this.f.firstName.value, this.f.lastName.value)
-      .pipe(first())
-      .subscribe(date => {
+    this.authenticationService.register(this.form.username.value,this.form.password.value,this.form.firstName.value)
+    .pipe(first()).subscribe(date => {
           this.router.navigate(['/login']);
-        },
-        error => {
-          this.error = error;
-          alert("Registration not successfull");
-          this.loading = false;
-        });
+      },
+      error => {
+        this.error = error;
+        alert("Username is taken");
+      }
+    );
   }
 }

@@ -12,12 +12,8 @@
   margin-bottom: 0.5vh;
 }
 
-.movieShowTimes {
-}
-
 .movieTitle {
   /* text-decoration: none; no underline */
-  color: black;
   background: none;
   outline: 0;
 }

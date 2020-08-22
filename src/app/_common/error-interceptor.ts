@@ -22,7 +22,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         // alert("error interceptor logging out");
         this.authenticationService.logout();
         // TODO deprecated
-        location.reload(true);
+        //location.reload(true);
       }
       else if (err.status == 404) {
         // resource not found - ignore

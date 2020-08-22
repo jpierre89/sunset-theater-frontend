@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {TheaterApiService} from '../_services/theater-api.service';
-
 import {ShowModel} from '../_models/show.model';
 import {MovieOnDate} from '../_models/movie-on-date';
-import {FormControl} from '@angular/forms';
-import {AuthenticationService} from '../_services/authentication.service';
-import {jwtToken} from '../_models/jwtToken';
+
 
 @Component({
   selector: 'app-now-playing',
@@ -24,10 +21,9 @@ export class NowPlayingComponent implements OnInit {
   movieInfoCollapsed = true;
 
   constructor(
-    /* inject shared instance service (singleton). the parameter both defines a property and identifies
+    /* inject shared instance service. The parameter both defines a property and identifies
        it as a theaterApiService injection site. */
     private theaterApiService: TheaterApiService,
-    private authenticationService: AuthenticationService,
   ) {}
 
   ngOnInit() {}

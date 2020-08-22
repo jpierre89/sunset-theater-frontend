@@ -4,9 +4,7 @@ export class SeatModel {
   number: string;
   row: string;
   auditorium: number;
-  reservations: number[];
+  //reservations: number[];
   is_empty_space: boolean;
-
-  /* not api model */
-  isReserved: boolean;
+  is_reserved: boolean;
 }

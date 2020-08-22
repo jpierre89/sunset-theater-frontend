@@ -29,9 +29,9 @@ export class LogInComponent implements OnInit {
     public dialog: MatDialog
   ) {
     // redirect if user already logged in
-    //if (this.authenticationService.currentUserValue) {
-      //this.router.navigate(['/now-playing']);
-    //}
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(['/now-playing']);
+    }
   }
 
   ngOnInit() {
@@ -42,37 +42,29 @@ export class LogInComponent implements OnInit {
 
   buildForm() {
     this.loginForm = this.formBuilder.group({
-      email: [null, [Validators.required, Validators.email]],
+      username: [null, [Validators.required]],
       password: [null, [Validators.required]],
     })
   }
 
   onSubmit(event) {
-    if (event.submitter.id === 'guest') {
-      this.loginGuest();
-      return;
-    }
-
     this.formSubmitted = true;
 
     if (this.loginForm.invalid) {
       return;
     }
 
-    // use service to attempt login with form's username and password
-    this.authenticationService.login(this.form.email.value, this.form.password.value)
-      .pipe(first())
-      .subscribe(data => {
-          this.router.navigate(['/now-playing']);        
-        },
-        error => {
+    this.authenticationService.login(
+      this.form.username.value, this.form.password.value
+    ).pipe(first()).subscribe(data => {
+        this.router.navigate(['/now-playing']);        
+      },
+      error => {
           this.error = error;
-        });
+          alert("Credentials not found. Sign-up");
+      }
+    );
 
-  }
-
-  loginGuest() {
-    return;
   }
 
 }

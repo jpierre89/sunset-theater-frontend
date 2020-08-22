@@ -50,19 +50,20 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  register(email: string, password: string, firstName: string, lastName: string) {
+  register(username: string, password: string, firstName?: string) {
     let params = new HttpParams();
-    params = params.append('email', String(email));
+    params = params.append('username', String(username));
     params = params.append('password', String(password));
-    params = params.append('first_name', String(firstName));
-    params = params.append('last_name', String(lastName));
+    if (firstName) {
+      params = params.append('first_name', String(firstName));
+    }
     return this.http.post<any>(this.registrationUrl, params);
   }
 
-  /* if response is 401, ErrorInterceptor handles */
-  login(email: string, password: string) {
+  /* if response is 401, ErrorInterceptor handles it*/
+  login(username: string, password: string) {
     let params = new HttpParams();
-    params = params.append('username', String(email));
+    params = params.append('username', String(username));
     params = params.append('password', String(password));
     return this.http.post<any>(this.accessUrl, params)
       .pipe(map(user => {

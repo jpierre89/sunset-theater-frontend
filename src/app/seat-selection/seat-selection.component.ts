@@ -19,7 +19,8 @@ export class SeatSelectionComponent implements OnInit {
 
 
   constructor(
-    // ActivatedRoute holds information about the route to this instance, such as parameters extracted from the URL.
+    /* ActivatedRoute holds information about the route to this instance,
+    such as parameters extracted from the URL */
     private route: ActivatedRoute,
     private theaterApiService: TheaterApiService,
     public router: Router
@@ -42,11 +43,6 @@ export class SeatSelectionComponent implements OnInit {
       .subscribe(seats => this.createRows(seats));
   }
 
-  getSeatAvailability(seat: SeatModel) {
-    this.theaterApiService.getSeatAvailability(seat.id, this.showID)
-      .subscribe(isReserved => seat.isReserved = isReserved)
-  }
-
   /* transforms sorted list of seats from API into rows for display
   * A1, A2, B1, B2, ...  ->  A1, A2
   *                          B1, B2
@@ -60,11 +56,8 @@ export class SeatSelectionComponent implements OnInit {
         this.rows.push(row);
         lastRowName = newRowName;
       }
-      // cannot use -1 to reference last elem
-      this.rows[this.rows.length - 1].seats.push(seat);
 
-      // get seat availability
-      this.getSeatAvailability(seat);
+      this.rows[this.rows.length - 1].seats.push(seat);
     }
   }
 
@@ -84,7 +77,6 @@ export class SeatSelectionComponent implements OnInit {
   }
 
   processResponse(reservations: ReservationDetailModel[]) {
-    // if reservation went through
     this.router.navigate(['/cart']);
     // TODO: else display selection failed.
   }
@@ -94,7 +86,7 @@ export class SeatSelectionComponent implements OnInit {
    * Does not add seat if seat already exists
    */
   addSeat(seat: SeatModel) {
-    if (seat.isReserved) {
+    if (seat.is_reserved) {
       return;
     }
 

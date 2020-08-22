@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, } from 'rxjs/operators';
 
 import {MovieModel} from '../_models/movie.model';
 import {ShowModel} from '../_models/show.model';
-import {Params} from '@angular/router';
 import {MovieOnDate} from '../_models/movie-on-date';
 import {SeatModel} from '../_models/seat.model';
 import {ReservationDetailModel} from '../_models/reservation-Detail.model';
@@ -18,6 +17,7 @@ import {environment} from '../../environments/environment';
    HttpClient.get() returns the body of the response as an untyped JSON object by default.
    Applying optional type specifier, <ClassName[]>, gives typed result object (Angular.io) */
 
+   
 @Injectable({
   providedIn: 'root'
 })
