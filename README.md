@@ -2,6 +2,7 @@
 
 >SPA powered by Angular consuming Theater_API
 
+
 ### Set-up
 * Angular CLI: 8.3.21
 * Angular 8.2.14.0
@@ -39,3 +40,6 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
     * `ng help`
     * `ng <command> --help`
     * [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+###
+
+
